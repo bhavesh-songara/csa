@@ -70,3 +70,11 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* video player */
+.stream {
+  flex-grow: 1;
+  max-width: 90%;
+  border-radius: 32px;
+  max-height: fit-content;
+}
