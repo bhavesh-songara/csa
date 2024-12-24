@@ -31,5 +31,3 @@ export async function connect() {
 
   console.log(`Connected to MongoDB: ${host}`);
 }
-
-export const csaDb = mongoose.connection.useDb("csa");

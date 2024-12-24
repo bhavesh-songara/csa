@@ -1,4 +1,4 @@
-import { csaDb } from "@/lib/mongodb";
+import { csaDb } from "@/lib/db/csa-db";
 import mongoose from "mongoose";
 
 export interface IAgentCall {
