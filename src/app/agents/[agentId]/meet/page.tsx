@@ -7,7 +7,7 @@ import { LiveAPIProvider } from "@/contexts/LiveAPIContext";
 import { cn } from "@/lib/utils";
 import { AgentService } from "@/services/AgentService";
 import { useQuery } from "@tanstack/react-query";
-import { Bot, Phone } from "lucide-react";
+import { Bot, Loader2, Phone } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useRef, useState } from "react";
 
@@ -26,7 +26,11 @@ export default function Meet() {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader2 className="w-10 h-10 animate-spin" />
+      </div>
+    );
   }
 
   if (!data) {
@@ -35,18 +39,26 @@ export default function Meet() {
 
   return (
     <LiveAPIProvider apiKey={process.env.NEXT_PUBLIC_GEMINI_API_KEY as string}>
-      {!meetJoined && (
+      <div
+        className={cn("", {
+          hidden: meetJoined,
+        })}
+      >
         <AgentMeetCard
           agent={data?.agent}
           handleJoinMeet={() => {
             setMeetJoined(true);
           }}
         />
-      )}
+      </div>
 
-      {meetJoined && (
-        <div>
-          <div className="h-[400px] w-[400px]">
+      <div
+        className={cn("", {
+          hidden: !meetJoined,
+        })}
+      >
+        <div className="flex items-center justify-center w-screen py-4">
+          <div className="h-[600px] w-[600px]">
             <video
               className={cn("stream", {
                 hidden: !videoRef.current || !videoStream,
@@ -56,16 +68,16 @@ export default function Meet() {
               playsInline
             />
           </div>
-
-          <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2">
-            <ControlTray
-              supportsVideo={true}
-              videoRef={videoRef}
-              onVideoStreamChange={setVideoStream}
-            />
-          </div>
         </div>
-      )}
+
+        <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2">
+          <ControlTray
+            supportsVideo={true}
+            videoRef={videoRef}
+            onVideoStreamChange={setVideoStream}
+          />
+        </div>
+      </div>
     </LiveAPIProvider>
   );
 }

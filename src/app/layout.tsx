@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RootDialog } from "@/components/root/RootDialog";
 import { RootSheet } from "@/components/root/RootSheet";
 import { RootDrawer } from "@/components/root/RootDrawer";
+import { ThemeProvider } from "@/components/common/ThemeProvider";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,16 +26,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
         <QueryClientProvider client={queryClient}>
           <Provider store={store}>
-            <main>{children}</main>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <main>{children}</main>
 
-            <RootDialog />
-            <RootSheet />
-            <RootDrawer />
-            <Toaster />
+              <RootDialog />
+              <RootSheet />
+              <RootDrawer />
+              <Toaster />
+            </ThemeProvider>
           </Provider>
         </QueryClientProvider>
       </body>

@@ -1,4 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   MultimodalLiveAPIClientConnection,
   MultimodalLiveClient,
@@ -10,7 +18,7 @@ import VolMeterWorket from "@/lib/worklets/vol-meter";
 
 export type UseLiveAPIResults = {
   client: MultimodalLiveClient;
-  setConfig: (config: LiveConfig) => void;
+  setConfig: Dispatch<SetStateAction<LiveConfig>>;
   config: LiveConfig;
   connected: boolean;
   connect: () => Promise<void>;

@@ -20,6 +20,7 @@ import { showSheet } from "@/redux/sheet";
 import { useAgentMutation } from "@/hooks/mutations/useAgentMutation";
 import { showDialog } from "@/redux/dialog";
 import { DialogType } from "@/constants/dialog";
+import Link from "next/link";
 
 export const AgentCard = (props: { agent: IAgent & { _id: string } }) => {
   const { agent } = props;
@@ -91,10 +92,16 @@ export const AgentCard = (props: { agent: IAgent & { _id: string } }) => {
         <p className="text-sm text-muted-foreground">{agent.description}</p>
       </CardContent>
       <CardFooter className="mt-auto">
-        <Button variant="secondary" className="w-full">
-          <Phone className="w-4 h-4 mr-2" />
-          Call
-        </Button>
+        <Link
+          href={`/agents/${agent._id}/meet`}
+          className="w-full"
+          target="_blank"
+        >
+          <Button variant="secondary" className="w-full">
+            <Phone className="w-4 h-4 mr-2" />
+            Call
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   );

@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useLiveAPIContext } from "@/contexts/LiveAPIContext";
 import { IAgent } from "@/model/AgentModel";
 import { Loader2, Phone } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function AgentMeetCard(props: {
   agent: IAgent & {
@@ -18,11 +18,36 @@ export default function AgentMeetCard(props: {
 
   const [joining, setJoining] = useState(false);
 
-  const { connect } = useLiveAPIContext();
+  const { setConfig, connect } = useLiveAPIContext();
+
+  useEffect(() => {
+    setConfig((prev) => {
+      return {
+        ...prev,
+        systemInstruction: {
+          parts: [
+            {
+              text: `You are a customer service agent. Here's your details
+              name: ${agent.name}
+              description: ${agent.description}
+              instructions: ${agent.instructions}
+              `,
+            },
+            {
+              text: `Connect with him go step wise do not complete all things in one go. First say hi how's day going and then ask him to share what support he needs. Be polite and friendly. Say thank you in the end.
+              `,
+            },
+          ],
+        },
+      };
+    });
+  }, [agent]);
 
   const handleJoin = async () => {
     setJoining(true);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    await connect();
+
     handleJoinMeet();
     setJoining(false);
   };

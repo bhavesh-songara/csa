@@ -27,7 +27,7 @@ export default function AgentsPage() {
 
   return (
     <div>
-      <section className="flex items-center justify-between px-4 py-2">
+      <section className="flex items-center justify-between px-4 py-4">
         <div className="flex items-center gap-2">
           <Bot className="w-6 h-6" />
           <h1 className="text-xl font-semibold">Agents</h1>
