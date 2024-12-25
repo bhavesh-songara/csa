@@ -78,19 +78,6 @@ CSA provides a modern, AI-powered customer service solution that enables:
 - Custom voice options for agents
 - Chat transcript export
 
-## Project Structure
-
-src/
-├── app/ # Next.js pages and API routes
-├── components/ # Reusable React components
-├── contexts/ # React contexts
-├── hooks/ # Custom React hooks
-├── lib/ # Utility functions and configurations
-├── model/ # MongoDB models
-├── redux/ # Redux store and slices
-├── services/ # API service layers
-└── constants/ # Type definitions and constants
-
 ## Contributing
 
 We welcome contributions! Please follow these steps:
