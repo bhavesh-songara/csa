@@ -41,7 +41,9 @@ export async function GET(request: NextRequest) {
   try {
     await connect();
 
-    const data = await AgentModel.find();
+    const data = await AgentModel.find({
+      isDeleted: false,
+    });
 
     return NextResponse.json({
       data,

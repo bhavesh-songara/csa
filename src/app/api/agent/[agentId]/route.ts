@@ -7,12 +7,10 @@ import { ApiHelper } from "@/lib/api";
 
 export async function GET(
   request: NextRequest,
-  params: {
-    agentId: string;
-  }
+  { params }: { params: Promise<{ agentId: string }> }
 ) {
   try {
-    const { agentId } = params;
+    const { agentId } = await params;
 
     await connect();
 
@@ -37,12 +35,14 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  params: {
-    agentId: string;
-  }
+  { params }: { params: Promise<{ agentId: string }> }
 ) {
   try {
-    const { agentId } = params;
+    console.log({
+      params,
+    });
+
+    const { agentId } = await params;
 
     const { name, description, instructions } = await request.json();
 
@@ -50,11 +50,12 @@ export async function PUT(
 
     validateJoiSchema({
       schema: Joi.object({
+        agentId: Joi.string().hex().length(24).required(),
         name: Joi.string().required(),
         description: Joi.string().allow(""),
         instructions: Joi.string().required(),
       }),
-      data: { name, description, instructions },
+      data: { name, description, instructions, agentId },
     });
 
     const updatedAgent = await AgentModel.findOneAndUpdate(
@@ -75,12 +76,19 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  params: { agentId: string }
+  { params }: { params: Promise<{ agentId: string }> }
 ) {
   try {
-    const { agentId } = params;
+    const { agentId } = await params;
 
     await connect();
+
+    validateJoiSchema({
+      schema: Joi.object({
+        agentId: Joi.string().hex().length(24).required(),
+      }),
+      data: { agentId },
+    });
 
     const deletedAgent = await AgentModel.findOneAndUpdate(
       { _id: agentId },

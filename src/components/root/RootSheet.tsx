@@ -3,19 +3,16 @@ import { useAppSelector } from "@/redux/hooks";
 import type { SheetType, SheetProps } from "@/constants/sheet";
 
 export const RootSheet = () => {
-  const { sheetStack } = useAppSelector((state) => state.sheet);
+  const { stack } = useAppSelector((state) => state.sheet);
 
   return (
     <>
-      {sheetStack.map(
-        (
-          sheet: { sheetType: SheetType; sheetProps?: SheetProps },
-          index: number
-        ) => {
-          const SheetComponent = SHEET_COMPONENT_MAP[sheet.sheetType];
+      {stack.map(
+        (sheet: { type: SheetType; props?: SheetProps }, index: number) => {
+          const SheetComponent = SHEET_COMPONENT_MAP[sheet.type];
 
           if (Boolean(SheetComponent)) {
-            return <SheetComponent key={index} {...sheet.sheetProps} />;
+            return <SheetComponent key={index} {...sheet.props} />;
           } else {
             return <> </>;
           }

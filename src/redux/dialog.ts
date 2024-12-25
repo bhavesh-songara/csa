@@ -3,14 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface IDialogState {
-  dialogStack: Array<{
-    dialogType: DialogType;
-    dialogProps?: DialogProps;
+  stack: Array<{
+    type: DialogType;
+    props?: DialogProps;
   }>;
 }
 
 const initialState: IDialogState = {
-  dialogStack: [],
+  stack: [],
 };
 
 export const dialogSlice = createSlice({
@@ -20,35 +20,35 @@ export const dialogSlice = createSlice({
     showDialog: (
       state,
       action: PayloadAction<{
-        dialogType: DialogType;
-        dialogProps?: DialogProps;
+        type: DialogType;
+        props?: DialogProps;
       }>
     ) => {
-      const dialogExist = state.dialogStack.find(
-        (dialog) => dialog.dialogType === action.payload.dialogType
+      const dialogExist = state.stack.find(
+        (dialog) => dialog.type === action.payload.type
       );
 
       if (!dialogExist) {
-        state.dialogStack.push({
-          dialogType: action.payload.dialogType,
-          dialogProps: action.payload.dialogProps,
+        state.stack.push({
+          type: action.payload.type,
+          props: action.payload.props,
         });
       }
     },
     hideDialog: (state) => {
-      state.dialogStack.pop();
+      state.stack.pop();
     },
     resetDialogStack: (state) => {
-      state.dialogStack = [];
+      state.stack = [];
     },
     removeDialog: (
       state,
       action: PayloadAction<{
-        dialogType: DialogType;
+        type: DialogType;
       }>
     ) => {
-      state.dialogStack = state.dialogStack.filter(
-        (dialog) => dialog.dialogType !== action.payload.dialogType
+      state.stack = state.stack.filter(
+        (dialog) => dialog.type !== action.payload.type
       );
     },
   },

@@ -1,8 +1,6 @@
 import { toast } from "@/hooks/use-toast";
 
 export const onMutationError = (error: any) => {
-  console.log(error);
-
   toast({
     title: "Oops, Something's Not Right! 🌟",
     description:

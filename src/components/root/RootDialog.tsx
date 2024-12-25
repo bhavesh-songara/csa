@@ -2,15 +2,15 @@ import { DIALOG_COMPONENT_MAP } from "@/constants/dialog";
 import { useAppSelector } from "@/redux/hooks";
 
 export const RootDialog = () => {
-  const { dialogStack } = useAppSelector((state) => state.dialog);
+  const { stack } = useAppSelector((state) => state.dialog);
 
   return (
     <>
-      {dialogStack.map((dialog, index) => {
-        const DialogComponent = DIALOG_COMPONENT_MAP[dialog.dialogType];
+      {stack.map((dialog, index) => {
+        const DialogComponent = DIALOG_COMPONENT_MAP[dialog.type];
 
         if (Boolean(DialogComponent)) {
-          return <DialogComponent key={index} {...dialog.dialogProps} />;
+          return <DialogComponent key={index} {...dialog.props} />;
         } else {
           return <> </>;
         }

@@ -3,14 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface IDrawerState {
-  drawerStack: Array<{
-    drawerType: DrawerType;
-    drawerProps?: DrawerProps;
+  stack: Array<{
+    type: DrawerType;
+    props?: DrawerProps;
   }>;
 }
 
 const initialState: IDrawerState = {
-  drawerStack: [],
+  stack: [],
 };
 
 export const drawerSlice = createSlice({
@@ -20,35 +20,35 @@ export const drawerSlice = createSlice({
     showDrawer: (
       state,
       action: PayloadAction<{
-        drawerType: DrawerType;
-        drawerProps?: DrawerProps;
+        type: DrawerType;
+        props?: DrawerProps;
       }>
     ) => {
-      const drawerExist = state.drawerStack.find(
-        (drawer) => drawer.drawerType === action.payload.drawerType
+      const drawerExist = state.stack.find(
+        (drawer) => drawer.type === action.payload.type
       );
 
       if (!drawerExist) {
-        state.drawerStack.push({
-          drawerType: action.payload.drawerType,
-          drawerProps: action.payload.drawerProps,
+        state.stack.push({
+          type: action.payload.type,
+          props: action.payload.props,
         });
       }
     },
     hideDrawer: (state) => {
-      state.drawerStack.pop();
+      state.stack.pop();
     },
     resetDrawerStack: (state) => {
-      state.drawerStack = [];
+      state.stack = [];
     },
     removeDrawer: (
       state,
       action: PayloadAction<{
-        drawerType: DrawerType;
+        type: DrawerType;
       }>
     ) => {
-      state.drawerStack = state.drawerStack.filter(
-        (drawer) => drawer.drawerType !== action.payload.drawerType
+      state.stack = state.stack.filter(
+        (drawer) => drawer.type !== action.payload.type
       );
     },
   },

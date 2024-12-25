@@ -3,14 +3,14 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { SheetType, SheetProps } from "@/constants/sheet";
 
 export interface ISheetState {
-  sheetStack: Array<{
-    sheetType: SheetType;
-    sheetProps?: SheetProps;
+  stack: Array<{
+    type: SheetType;
+    props?: SheetProps;
   }>;
 }
 
 const initialState: ISheetState = {
-  sheetStack: [],
+  stack: [],
 };
 
 export const sheetSlice = createSlice({
@@ -20,35 +20,35 @@ export const sheetSlice = createSlice({
     showSheet: (
       state,
       action: PayloadAction<{
-        sheetType: SheetType;
-        sheetProps?: SheetProps;
+        type: SheetType;
+        props?: SheetProps;
       }>
     ) => {
-      const sheetExist = state.sheetStack.find(
-        (sheet) => sheet.sheetType === action.payload.sheetType
+      const sheetExist = state.stack.find(
+        (sheet) => sheet.type === action.payload.type
       );
 
       if (!sheetExist) {
-        state.sheetStack.push({
-          sheetType: action.payload.sheetType,
-          sheetProps: action.payload.sheetProps,
+        state.stack.push({
+          type: action.payload.type,
+          props: action.payload.props,
         });
       }
     },
     hideSheet: (state) => {
-      state.sheetStack.pop();
+      state.stack.pop();
     },
     resetSheetStack: (state) => {
-      state.sheetStack = [];
+      state.stack = [];
     },
     removeSheet: (
       state,
       action: PayloadAction<{
-        sheetType: SheetType;
+        type: SheetType;
       }>
     ) => {
-      state.sheetStack = state.sheetStack.filter(
-        (sheet) => sheet.sheetType !== action.payload.sheetType
+      state.stack = state.stack.filter(
+        (sheet) => sheet.type !== action.payload.type
       );
     },
   },

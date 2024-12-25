@@ -1,17 +1,16 @@
 import { FC } from "react";
 
+import {
+  AddAgentSheet,
+  AddAgentSheetProps,
+} from "@/components/agent/AddAgentSheet";
+
 export enum SheetType {
-  CREATE_AGENT = "CREATE_AGENT",
-  EDIT_AGENT = "EDIT_AGENT",
-  AGENT_DETAILS = "AGENT_DETAILS",
+  ADD_AGENT = "ADD_AGENT",
 }
 
-export type SheetProps = any;
-
-const PlaceholderComponent: FC<SheetProps> = () => null;
+export type SheetProps = any | AddAgentSheetProps;
 
 export const SHEET_COMPONENT_MAP: Record<SheetType, FC<SheetProps>> = {
-  [SheetType.CREATE_AGENT]: PlaceholderComponent,
-  [SheetType.EDIT_AGENT]: PlaceholderComponent,
-  [SheetType.AGENT_DETAILS]: PlaceholderComponent,
+  [SheetType.ADD_AGENT]: AddAgentSheet,
 };

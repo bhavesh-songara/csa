@@ -1,8 +1,14 @@
-export enum DialogType {}
+import {
+  ConfirmActionDialog,
+  ConfirmActionDialogProps,
+} from "@/components/common/ConfirmActionDialog";
 
-export type DialogProps = any;
+export enum DialogType {
+  ConfirmActionDialog = "ConfirmActionDialog",
+}
 
-export const DIALOG_COMPONENT_MAP: Record<
-  DialogType,
-  React.FC<DialogProps>
-> = {};
+export type DialogProps = ConfirmActionDialogProps;
+
+export const DIALOG_COMPONENT_MAP: Record<DialogType, React.FC<DialogProps>> = {
+  [DialogType.ConfirmActionDialog]: ConfirmActionDialog,
+};
